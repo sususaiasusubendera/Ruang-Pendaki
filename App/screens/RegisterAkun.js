@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
-import firebase from 'firebase/app';
-import 'firebase/auth';
+import { View, TextInput, Button, StyleSheet, ProgressBarAndroid } from 'react-native';
+import { getAuth } from 'firebase/auth';
 
 const RegisterAkun = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -37,7 +36,19 @@ const RegisterAkun = ({ navigation }) => {
         value={password}
         onChangeText={text => setPassword(text)}
       />
-      <Button title="Next" onPress={handleNext} />
+      <Button
+        title="Next"
+        onPress={handleNext}
+        color="#295531" // Warna tombol Next
+      />
+      <View style={styles.progressBarContainer}>
+        <ProgressBarAndroid
+          styleAttr="Horizontal"
+          indeterminate={false}
+          progress={0.5} // Progress 1 dari 2 langkah (0.5)
+          color="#295531" // Warna bola progress
+        />
+      </View>
     </View>
   );
 };
@@ -47,6 +58,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#E5D9B6', // Latar belakang halaman
     padding: 16,
   },
   input: {
@@ -56,6 +68,11 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     marginBottom: 12,
     paddingHorizontal: 10,
+  },
+  progressBarContainer: {
+    width: '100%',
+    marginTop: 16,
+    marginBottom: 16,
   },
 });
 

@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import RegisterAkun from './App/screens/RegisterAkun';
 import RegisterProfil from './App/screens/RegisterProfil';
 import LoginScreen from './App/screens/LoginScreen';
+import ProfilePage from './App/screens/Profil';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,11 @@ const App = () => {
           name="LoginScreen"
           component={LoginScreen}
           options={{ title: 'Login' }}
+        />
+        <Stack.Screen
+          name="Profil"
+          component={ProfilePage}
+          options={{ title: 'Profil' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

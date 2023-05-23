@@ -1,7 +1,17 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
+import { initializeApp } from 'firebase/app';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getFirestore, setDoc, doc } from 'firebase/firestore';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCNAAgBJjt25UsWDgHIIisGzuqkiwfDTTE",
+  authDomain: "ruang-pendaki-84fdc.firebaseapp.com",
+  projectId: "ruang-pendaki-84fdc",
+  storageBucket: "ruang-pendaki-84fdc.appspot.com",
+  messagingSenderId: "877240749467",
+  appId: "1:877240749467:web:40fa5d4d574930f80b653e"
+};
 
 const RegisterProfil = ({ navigation, route }) => {
   const [fullName, setFullName] = useState('');
@@ -16,13 +26,21 @@ const RegisterProfil = ({ navigation, route }) => {
       password
     } = route.params;
 
+    console.log(email)
+
     try {
+      // Inisialisasi Firebase
+      const app = initializeApp(firebaseConfig);
+
       // Mendaftarkan pengguna dengan email dan password ke Firebase
-      const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+      const auth = getAuth(app);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
       // Menyimpan data pengguna ke Firestore
-      await firebase.firestore().collection('users').doc(user.uid).set({
+      const db = getFirestore(app);
+      const userRef = doc(db, 'users', user.uid);
+      await setDoc(userRef, {
         email,
         phone,
         fullName,
@@ -32,7 +50,7 @@ const RegisterProfil = ({ navigation, route }) => {
       });
 
       // Mengarahkan pengguna ke halaman lain setelah pendaftaran berhasil
-      navigation.navigate('HomeScreen');
+      navigation.navigate('LoginScreen');
     } catch (error) {
       console.log('Pendaftaran gagal', error);
     }
