@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { firebase } from '@firebase/app';
-import '@firebase/firestore';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, doc, getDoc } from '@firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCNAAgBJjt25UsWDgHIIisGzuqkiwfDTTE",
@@ -20,9 +19,14 @@ const ProfilePage = ({ navigation, route }) => {
   useEffect(() => {
     const fetchGunungData = async () => {
       try {
-        const db = firebase.firestore();
-        const gunungRef = db.collection('gunung').doc('V0Wz5cKT8T8ERtEFmcii');
-        const gunungSnapshot = await gunungRef.get();
+        // const firebaseApp = initializeApp(firebaseConfig);
+        // const db = getFirestore(firebaseApp);
+        // const gunungRef = db.collection('gunung').doc('V0Wz5cKT8T8ERtEFmcii');
+        // const gunungSnapshot = await gunungRef.get();
+        const firebaseApp = initializeApp(firebaseConfig);
+        const db = getFirestore(); // Remove the argument from getFirestore()
+        const gunungRef = doc(db, 'gunung', 'V0Wz5cKT8T8ERtEFmcii');
+        const gunungSnapshot = await getDoc(gunungRef);
 
         if (gunungSnapshot.exists()) {
           const gunungData = gunungSnapshot.data();
@@ -32,7 +36,7 @@ const ProfilePage = ({ navigation, route }) => {
             {
               fotoGunung: gunungData.foto,
               namaGunung: gunungData.nama,
-              tinggiGunung: gunungData.tinggi,
+              tinggiGunung: gunungData.ketinggian,
               lokasiGunung: gunungData.lokasi,
               tanggalPendakian: userData.tanggalPendakian,
             },
@@ -49,7 +53,7 @@ const ProfilePage = ({ navigation, route }) => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.coverPhotoContainer}>
         {userData.coverPhoto ? (
           <Image source={{ uri: userData.coverPhoto }} style={styles.coverPhoto} />
@@ -95,7 +99,7 @@ const ProfilePage = ({ navigation, route }) => {
               <Image source={{ uri: riwayat.fotoGunung }} style={styles.gunungPhoto} />
               <View style={styles.gunungInfo}>
                 <Text style={styles.gunungName}>{riwayat.namaGunung}</Text>
-                <Text style={styles.gunungDetail}>Tinggi: {riwayat.tinggiGunung}</Text>
+                <Text style={styles.gunungDetail}>Tinggi: {riwayat.tinggiGunung} mdpl</Text>
                 <Text style={styles.gunungDetail}>Lokasi: {riwayat.lokasiGunung}</Text>
                 <Text style={styles.tanggalPendakian}>Tanggal Pendakian: {riwayat.tanggalPendakian}</Text>
               </View>
@@ -112,14 +116,13 @@ const ProfilePage = ({ navigation, route }) => {
       >
         <Text style={styles.addHikeText}>Tambah Riwayat Pendakian</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     padding: 16,
   },
   emptyTextContainer: {
@@ -139,6 +142,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     width: '100%',
     height : 200,
+    alignItems: 'center'
   },
   coverPhoto: {
     width: '100%',
@@ -150,7 +154,10 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     overflow: 'hidden',
     marginBottom: 16,
-    height : 100,
+    width: 100,
+    height: 100,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   profilePhoto: {
     width: 100,
