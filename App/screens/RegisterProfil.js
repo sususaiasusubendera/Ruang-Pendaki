@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { View, TextInput, Button, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { getFirestore, setDoc, doc } from 'firebase/firestore';
@@ -15,7 +15,7 @@ const firebaseConfig = {
 
 const RegisterProfil = ({ navigation, route }) => {
   const [fullName, setFullName] = useState('');
-  const [gender, setGender] = useState('');
+  const [selectedGender, setSelectedGender] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [address, setAddress] = useState('');
 
@@ -44,7 +44,7 @@ const RegisterProfil = ({ navigation, route }) => {
         email,
         phone,
         fullName,
-        gender,
+        selectedGender,
         birthDate,
         address,
       });
@@ -64,12 +64,21 @@ const RegisterProfil = ({ navigation, route }) => {
         value={fullName}
         onChangeText={text => setFullName(text)}
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Gender"
-        value={gender}
-        onChangeText={text => setGender(text)}
-      />
+      <View style={styles.genderContainer}>
+        <TouchableOpacity
+          style={[styles.genderOption, selectedGender === 'Pria' && styles.selectedOption]}
+          onPress={() => setSelectedGender('Pria')}
+        >
+          <Text style={styles.optionText}>Pria</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.genderOption, selectedGender === 'Wanita' && styles.selectedOption]}
+          onPress={() => setSelectedGender('Wanita')}
+        >
+          <Text style={styles.optionText}>Wanita</Text>
+        </TouchableOpacity>
+      </View>
       <TextInput
         style={styles.input}
         placeholder="Birth Date"
@@ -82,7 +91,11 @@ const RegisterProfil = ({ navigation, route }) => {
         value={address}
         onChangeText={text => setAddress(text)}
       />
-      <Button title="Register" onPress={handleRegister} />
+      <Button
+        title="Register"
+        onPress={handleRegister}
+        color="#295531"
+      />
     </View>
   );
 };
@@ -92,6 +105,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#E5D9B6',
     padding: 16,
   },
   input: {
@@ -101,6 +115,25 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     marginBottom: 12,
     paddingHorizontal: 10,
+  },
+  genderContainer: {
+    flexDirection: 'row',
+    marginBottom: 12,
+  },
+  genderOption: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 4,
+    padding: 10,
+    marginRight: 12,
+    alignItems: 'center',
+  },
+  selectedOption: {
+    backgroundColor: '#295531',
+  },
+  optionText: {
+    color: '#bdb39b',
   },
 });
 
