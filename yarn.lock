@@ -1646,7 +1646,7 @@
   resolved "https://registry.npmjs.org/@firebase/firestore-types/-/firestore-types-2.5.1.tgz"
   integrity sha512-xG0CA6EMfYo8YeUxC8FeDzf6W3FX1cLlcAGBYV6Cku12sZRI81oWcu61RSKM66K6kUENP+78Qm8mvroBcm1whw==
 
-"@firebase/firestore@3.12.0":
+"@firebase/firestore@^3.12.0", "@firebase/firestore@3.12.0":
   version "3.12.0"
   resolved "https://registry.npmjs.org/@firebase/firestore/-/firestore-3.12.0.tgz"
   integrity sha512-mZdwIJBOIAdkaykqZqMYQZldSH19gf7u1Y77UVxh4igm1zaG8ZiGE8qYVXQ/vGc+BvvUZ8OpnqLI5Z0JSJtDIg==
@@ -2290,7 +2290,7 @@
     prompts "^2.4.0"
     semver "^6.3.0"
 
-"@react-native-firebase/app@^17.5.0":
+"@react-native-firebase/app@^17.5.0", "@react-native-firebase/app@17.5.0":
   version "17.5.0"
   resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-17.5.0.tgz"
   integrity sha512-8DWjguVmVYmuPWI7mhXlmLB6GxKnPjUjZ4Wnnyj3Wh5uqHzgUREHEA1aH92PT84LJLZL8F6dJZk+fIyo9UyXnA==
@@ -2298,10 +2298,15 @@
     opencollective-postinstall "^2.0.1"
     superstruct "^0.6.2"
 
-"@react-native-picker/picker@^2.4.10":
-  version "2.4.10"
-  resolved "https://registry.npmjs.org/@react-native-picker/picker/-/picker-2.4.10.tgz"
-  integrity sha512-EvAlHmPEPOwvbP6Pjg/gtDV3XJzIjIxr10fXFNlX5r9HeHw582G1Zt2o8FLyB718nOttgj8HYUTGxvhu4N65sQ==
+"@react-native-firebase/firestore@^17.5.0":
+  version "17.5.0"
+  resolved "https://registry.npmjs.org/@react-native-firebase/firestore/-/firestore-17.5.0.tgz"
+  integrity sha512-6pfvp2x28parK3F2CvL6dGketzl8cPspjoE/SsSWem7EhtCluDwCT+qZjPJgJXyEHLhJVtnPHkHOHQGzH3he0Q==
+
+"@react-native-picker/picker@2.4.8":
+  version "2.4.8"
+  resolved "https://registry.npmjs.org/@react-native-picker/picker/-/picker-2.4.8.tgz"
+  integrity sha512-5NQ5XPo1B03YNqKFrV6h9L3CQaHlB80wd4ETHUEABRP2iLh7FHLVObX2GfziD+K/VJb8G4KZcZ23NFBFP1f7bg==
 
 "@react-native/assets@1.0.0":
   version "1.0.0"
