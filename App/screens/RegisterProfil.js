@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { View, TextInput, Button, StyleSheet, TouchableOpacity, Text, Modal } from 'react-native';
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { getFirestore, setDoc, doc } from 'firebase/firestore';
@@ -18,6 +18,10 @@ const RegisterProfil = ({ navigation, route }) => {
   const [selectedGender, setSelectedGender] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [address, setAddress] = useState('');
+  const [isRegisterSuccess, setIsRegisterSuccess] = useState(false); // State untuk mengontrol visibilitas pop-up
+  const [isRegisterPopupVisible, setIsRegisterPopupVisible] = useState(false);
+  const [error, setError] = useState('');
+  const [errmsg, setErrmsg] = useState('');
 
   const handleRegister = async () => {
     const {
@@ -25,8 +29,6 @@ const RegisterProfil = ({ navigation, route }) => {
       phone,
       password
     } = route.params;
-
-    console.log(email)
 
     try {
       // Inisialisasi Firebase
@@ -49,11 +51,34 @@ const RegisterProfil = ({ navigation, route }) => {
         address,
       });
 
+      // Menampilkan pop-up "Register Berhasil"
+      setIsRegisterSuccess(true);
+      setIsRegisterPopupVisible(true);
+
       // Mengarahkan pengguna ke halaman lain setelah pendaftaran berhasil
-      navigation.navigate('LoginScreen');
     } catch (error) {
-      console.log('Pendaftaran gagal', error);
+      console.log('Pendaftaran gagal', error.message);
+      if (error.message == 'Firebase: Error (auth/email-already-in-use).'){
+        setErrmsg('Email telah digunakan');
+      }
+      else if (error.message == 'Firebase: Password should be at least 6 characters (auth/weak-password).'){
+        setErrmsg('Panjang password minimal 6 karakter');
+      }
+      else{
+        setErrmsg(error.message);
+      }
+      setError(error.message);
     }
+  };
+
+  const handleRegisterPopupOK = () => {
+    setIsRegisterPopupVisible(false);
+    navigation.navigate('LoginScreen');
+  };
+
+  const handleRegisterPopupError = () => {
+    setError('');
+    setErrmsg('');
   };
 
   return (
@@ -96,6 +121,34 @@ const RegisterProfil = ({ navigation, route }) => {
         onPress={handleRegister}
         color="#295531"
       />
+
+      {/* Pop-up "Register Berhasil" */}
+      <Modal visible={isRegisterPopupVisible} animationType="fade" transparent={true}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalText}>Register Berhasil</Text>
+            <Button
+              title="OK"
+              onPress={handleRegisterPopupOK}
+              color="#295531"
+            />
+          </View>
+        </View>
+      </Modal>
+
+      {/* Pop-up error */}
+      <Modal visible={errmsg !== ''} animationType="fade" transparent={true}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.errorText}>Pendaftaran gagal {"\n"}{errmsg}</Text>
+            <Button
+              title="OK"
+              onPress={handleRegisterPopupError}
+              color="#295531"
+            />
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -134,6 +187,29 @@ const styles = StyleSheet.create({
   },
   optionText: {
     color: '#bdb39b',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 16,
+    alignItems: 'center',
+  },
+  modalText: {
+    fontSize: 18,
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  errorText: {
+    fontSize: 16,
+    marginBottom: 8,
+    color: 'red',
+    textAlign: 'center',
   },
 });
 
