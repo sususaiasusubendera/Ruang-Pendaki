@@ -71,7 +71,7 @@ const ProfilePage = ({ navigation, route }) => {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container2}>
       <View style={styles.coverPhotoContainer}>
         {userData.coverPhoto ? (
           <Image source={{ uri: userData.coverPhoto }} style={styles.coverPhoto} />
@@ -98,64 +98,60 @@ const ProfilePage = ({ navigation, route }) => {
         )}
       </View>
 
-      <Text style={styles.name}>{userData.fullName}</Text>
-
-      <Text style={styles.description}>
-        {userData.description ? userData.description : '(Deskripsi kosong)'}
-      </Text>
-
-      <Text style={styles.address}>{userData.address}</Text>
-
-      <Text style={styles.friendsCount}>{userData.friendsCount || '0'} Friends</Text>
-      {!editMode ? ( // Conditionally render EditProfile component
-        <>
-          <TouchableOpacity
-        style={styles.editProfileButton}
-        onPress={() => navigation.navigate('EditProfile', { userData: userData })}
-      >
-        <Text style={styles.editProfileText}>Edit Profile & Account</Text>
-      </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.editProfileButton}
-            onPress={() => setEditMode(true)} // Toggle edit mode
-          >
-            <Text style={styles.editProfileText}>Edit Profile & Account</Text>
-          </TouchableOpacity>
-        </>
-      ) : (
-        <EditProfile
-          userData={userData}
-          setUserData={setUserData} // Pass necessary props to EditProfile
-          setEditMode={setEditMode} // Pass function to toggle edit mode
-        />
-      )}
-
       <View style={styles.container}>
-        <Text style={styles.sectionTitle}>Riwayat Pendakian</Text>
-        {riwayatPendakian.length > 0 ? (
-          riwayatPendakian.map((riwayat, index) => (
-            <View style={styles.pendakianContainer} key={index}>
-              <Image source={{ uri: riwayat.fotoGunung }} style={styles.gunungPhoto} />
-              <View style={styles.gunungInfo}>
-                <Text style={styles.gunungName}>{riwayat.namaGunung}</Text>
-                <Text style={styles.gunungDetail}>Tinggi: {riwayat.tinggiGunung} mdpl</Text>
-                <Text style={styles.gunungDetail}>Lokasi: {riwayat.lokasiGunung}</Text>
-                <Text style={styles.tanggalPendakian}>Tanggal Pendakian: {riwayat.tanggalPendakian}</Text>
-              </View>
-            </View>
-          ))
-        ) : (
-          <Text style={styles.emptyText}>(Masih kosong, tambahkan riwayat pendakianmu!)</Text>
-        )}
-      </View>
+        <Text style={styles.name}>{userData.fullName}</Text>
 
-      <TouchableOpacity
-        style={styles.addHikeButton}
-        onPress={() => navigation.navigate('AddHike' , ( handleTambahkan ))}
-      >
-        <Text style={styles.addHikeText}>Tambah Riwayat Pendakian</Text>
-      </TouchableOpacity>
+        <Text style={styles.description}>
+          {userData.description ? userData.description : '(Deskripsi kosong)'}
+        </Text>
+
+        <Text style={styles.address}>{userData.address}</Text>
+
+        <Text style={styles.friendsCount}>{userData.friendsCount || '0'} Friends</Text>
+        {!editMode ? ( // Conditionally render EditProfile component
+          <>
+        <TouchableOpacity
+          style={styles.editProfileButton}
+          onPress={() => navigation.navigate('EditProfile', { userData: userData })}
+        >
+          <Text style={styles.editProfileText}>Edit Profile & Account</Text>
+        </TouchableOpacity>
+
+          </>
+        ) : (
+          <EditProfile
+            userData={userData}
+            setUserData={setUserData} // Pass necessary props to EditProfile
+            setEditMode={setEditMode} // Pass function to toggle edit mode
+          />
+        )}
+
+        <View style={styles.container3}>
+          <Text style={styles.sectionTitle}>Riwayat Pendakian</Text>
+          {riwayatPendakian.length > 0 ? (
+            riwayatPendakian.map((riwayat, index) => (
+              <View style={styles.pendakianContainer} key={index}>
+                <Image source={{ uri: riwayat.fotoGunung }} style={styles.gunungPhoto} />
+                <View style={styles.gunungInfo}>
+                  <Text style={styles.gunungName}>{riwayat.namaGunung}</Text>
+                  <Text style={styles.gunungDetail}>Tinggi: {riwayat.tinggiGunung} mdpl</Text>
+                  <Text style={styles.gunungDetail}>Lokasi: {riwayat.lokasiGunung}</Text>
+                  <Text style={styles.tanggalPendakian}>Tanggal Pendakian: {riwayat.tanggalPendakian}</Text>
+                </View>
+              </View>
+            ))
+          ) : (
+            <Text style={styles.emptyText}>(Masih kosong, tambahkan riwayat pendakianmu!)</Text>
+          )}
+        </View>
+
+        <TouchableOpacity
+          style={styles.addHikeButton}
+          onPress={() => navigation.navigate('AddHike' , ( handleTambahkan ))}
+        >
+          <Text style={styles.addHikeText}>Tambah Riwayat Pendakian</Text>
+        </TouchableOpacity>
+      </View>
     </ScrollView>
   );
 };
@@ -164,6 +160,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+  },
+  container2: {
+    flex: 1,
+    padding: 0,
+    backgroundColor: "#FFFAED",
+  },
+  container3: {
+    flex: 1,
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: "#FFFAED",
   },
   emptyTextContainer: {
     flex: 1,
@@ -177,16 +184,16 @@ const styles = StyleSheet.create({
   coverPhotoContainer: {
     borderWidth: 1,
     borderColor: '#ccc',
-    borderRadius: 4,
     overflow: 'hidden',
     marginBottom: 16,
     width: '100%',
-    height : 200,
+    height : 100,
     alignItems: 'center'
   },
   coverPhoto: {
     width: '100%',
-    height: 200,
+    top: "-20%",
+    height: 200
   },
   profilePhotoContainer: {
     borderWidth: 1,
@@ -196,6 +203,9 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     width: 100,
     height: 100,
+    position: "absolute",
+    top: "10%",
+    left: "4%",
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -210,17 +220,19 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     fontWeight: 'bold',
+    paddingTop: 30,
     marginBottom: 8,
   },
   description: {
     fontSize: 16,
-    marginBottom: 8,
-    textAlign: 'center',
+    marginBottom: 0,
+    textAlign: 'left',
   },
   address: {
     fontSize: 16,
     marginBottom: 8,
-    textAlign: 'center',
+    textAlign: 'left',
+    color: "#868686",
   },
   friendsCount: {
     fontSize: 16,
