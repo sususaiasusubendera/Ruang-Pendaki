@@ -7,6 +7,8 @@ import LoginScreen from './App/screens/LoginScreen';
 import ProfilePage from './App/screens/Profil';
 import AddHike from './App/screens/AddHike';
 import EditProfile from './App/screens/EditProfile';
+import ListGunung from './App/screens/ListGunung';
+import ListUsers from './App/screens/ListUsers';
 
 const Stack = createStackNavigator();
 
@@ -43,6 +45,16 @@ const App = () => {
           name="EditProfile"
           component={EditProfile}
           options={{ title: 'Edit Profil' }}
+        />
+        <Stack.Screen
+          name="ListGunung"
+          component={ListGunung}
+          options={{ title: 'Daftar Gunung' }}
+        />
+        <Stack.Screen
+          name="ListUsers"
+          component={ListUsers}
+          options={{ title: 'Tambah Teman' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

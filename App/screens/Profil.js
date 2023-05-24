@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'rea
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, getDoc } from '@firebase/firestore';
 import EditProfile from './EditProfile';
+import BottomNavigation from './BottomNavigation';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCNAAgBJjt25UsWDgHIIisGzuqkiwfDTTE",
@@ -71,7 +72,8 @@ const ProfilePage = ({ navigation, route }) => {
   };
 
   return (
-    <ScrollView style={styles.container2}>
+    <View style={styles.container2}>
+      <ScrollView>
       <View style={styles.coverPhotoContainer}>
         {userData.coverPhoto ? (
           <Image source={{ uri: userData.coverPhoto }} style={styles.coverPhoto} />
@@ -153,6 +155,10 @@ const ProfilePage = ({ navigation, route }) => {
         </TouchableOpacity>
       </View>
     </ScrollView>
+    <View style={styles.containerPendakian}>
+    <BottomNavigation/>
+    </View>
+    </View>
   );
 };
 
