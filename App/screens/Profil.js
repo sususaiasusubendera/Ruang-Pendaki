@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, getDoc } from '@firebase/firestore';
+import EditProfile from './EditProfile';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCNAAgBJjt25UsWDgHIIisGzuqkiwfDTTE",
@@ -15,20 +16,20 @@ const firebaseConfig = {
 const ProfilePage = ({ navigation, route }) => {
   const { userData } = route.params;
   const [riwayatPendakian, setRiwayatPendakian] = useState([]);
+  // const [gunungList, setGunungList] = useState([]);
+  const [editMode, setEditMode] = useState(false);
+
 
   useEffect(() => {
     const fetchGunungData = async () => {
       try {
-        // const firebaseApp = initializeApp(firebaseConfig);
-        // const db = getFirestore(firebaseApp);
-        // const gunungRef = db.collection('gunung').doc('V0Wz5cKT8T8ERtEFmcii');
-        // const gunungSnapshot = await gunungRef.get();
-        const firebaseApp = initializeApp(firebaseConfig);
         const db = getFirestore(); // Remove the argument from getFirestore()
         const gunungRef = doc(db, 'gunung', 'V0Wz5cKT8T8ERtEFmcii');
         const gunungSnapshot = await getDoc(gunungRef);
 
-        if (gunungSnapshot.exists()) {
+        if (!gunungSnapshot.empty) {
+          // const gunungData = gunungSnapshot.docs.map((doc) => doc.data());
+          // setGunungList(gunungData);
           const gunungData = gunungSnapshot.data();
 
           // Mengisi riwayatPendakian dengan data gunung
@@ -52,15 +53,35 @@ const ProfilePage = ({ navigation, route }) => {
     fetchGunungData();
   }, []);
 
+  const handleSaveProfile = async (updatedUserData) => {
+    try {
+      const db = getFirestore();
+      const userRef = doc(db, 'users', userData.id);
+      await updateDoc(userRef, updatedUserData);
+      console.log('Profile saved successfully!');
+    } catch (error) {
+      console.log('Error saving profile:', error);
+    }
+  };
+
+  const handleTambahkan = (riwayatPendakian) => {
+    // Lakukan operasi tambahkan riwayat pendakian ke profil
+    const updatedRiwayatPendakian = [...riwayatPendakian, riwayatPendakian];
+    setRiwayatPendakian(updatedRiwayatPendakian);
+  };
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.coverPhotoContainer}>
         {userData.coverPhoto ? (
           <Image source={{ uri: userData.coverPhoto }} style={styles.coverPhoto} />
         ) : (
-          <View style={styles.emptyTextContainer}>
+          <TouchableOpacity
+            style={styles.emptyImageContainer}
+            onPress={() => navigation.navigate('EditProfile', { userData: userData })}
+          >
             <Text style={styles.emptyText}>Upload gambar</Text>
-          </View>
+          </TouchableOpacity>
         )}
       </View>
 
@@ -68,9 +89,12 @@ const ProfilePage = ({ navigation, route }) => {
         {userData.profilePhoto ? (
           <Image source={{ uri: userData.profilePhoto }} style={styles.profilePhoto} />
         ) : (
-          <View style={styles.emptyTextContainer}>
+          <TouchableOpacity
+            style={styles.emptyImageContainer}
+            onPress={() => navigation.navigate('EditProfile', { userData: userData })}
+          >
             <Text style={styles.emptyText}>Upload gambar</Text>
-          </View>
+          </TouchableOpacity>
         )}
       </View>
 
@@ -83,13 +107,29 @@ const ProfilePage = ({ navigation, route }) => {
       <Text style={styles.address}>{userData.address}</Text>
 
       <Text style={styles.friendsCount}>{userData.friendsCount || '0'} Friends</Text>
-
-      <TouchableOpacity
+      {!editMode ? ( // Conditionally render EditProfile component
+        <>
+          <TouchableOpacity
         style={styles.editProfileButton}
-        onPress={() => navigation.navigate('EditProfile')}
+        onPress={() => navigation.navigate('EditProfile', { userData: userData })}
       >
         <Text style={styles.editProfileText}>Edit Profile & Account</Text>
       </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.editProfileButton}
+            onPress={() => setEditMode(true)} // Toggle edit mode
+          >
+            <Text style={styles.editProfileText}>Edit Profile & Account</Text>
+          </TouchableOpacity>
+        </>
+      ) : (
+        <EditProfile
+          userData={userData}
+          setUserData={setUserData} // Pass necessary props to EditProfile
+          setEditMode={setEditMode} // Pass function to toggle edit mode
+        />
+      )}
 
       <View style={styles.container}>
         <Text style={styles.sectionTitle}>Riwayat Pendakian</Text>
@@ -112,7 +152,7 @@ const ProfilePage = ({ navigation, route }) => {
 
       <TouchableOpacity
         style={styles.addHikeButton}
-        onPress={() => navigation.navigate('AddHike')}
+        onPress={() => navigation.navigate('AddHike' , ( handleTambahkan ))}
       >
         <Text style={styles.addHikeText}>Tambah Riwayat Pendakian</Text>
       </TouchableOpacity>
@@ -162,6 +202,10 @@ const styles = StyleSheet.create({
   profilePhoto: {
     width: 100,
     height: 100,
+  },
+  emptyImageContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   name: {
     fontSize: 24,

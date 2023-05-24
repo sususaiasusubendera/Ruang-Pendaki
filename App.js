@@ -5,6 +5,8 @@ import RegisterAkun from './App/screens/RegisterAkun';
 import RegisterProfil from './App/screens/RegisterProfil';
 import LoginScreen from './App/screens/LoginScreen';
 import ProfilePage from './App/screens/Profil';
+import AddHike from './App/screens/AddHike';
+import EditProfile from './App/screens/EditProfile';
 
 const Stack = createStackNavigator();
 
@@ -31,6 +33,16 @@ const App = () => {
           name="Profil"
           component={ProfilePage}
           options={{ title: 'Profil' }}
+        />
+        <Stack.Screen
+          name="AddHike"
+          component={AddHike}
+          options={{ title: 'Tambah Riwayat Pendakian' }}
+        />
+        <Stack.Screen
+          name="EditProfile"
+          component={EditProfile}
+          options={{ title: 'Edit Profil' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
