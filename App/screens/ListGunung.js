@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, FlatList, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { useNavigation } from '@react-navigation/core';
 import BottomNavigation from './BottomNavigation';
 
-const ListGunung = () => {
+const ListGunung = ({ navigation }) => {
   const [gunungList, setGunungList] = useState([]);
 
   useEffect(() => {
@@ -19,10 +20,10 @@ const ListGunung = () => {
 
         // Loop through the snapshot and extract the necessary data
         snapshot.forEach((doc) => {
-          const { nama, foto, lokasi, ketinggian } = doc.data();
+          const { nama, foto, lokasi, ketinggian, uid } = doc.data();
 
           // Push the extracted data to the array
-          gunungData.push({ nama, foto, lokasi, ketinggian });
+          gunungData.push({ nama, foto, lokasi, ketinggian, uid });
         });
 
         // Set the gunungList state with the retrieved data
@@ -38,7 +39,7 @@ const ListGunung = () => {
 
   // Render item component for FlatList
   const renderItem = ({ item }) => (
-    <Pressable onPress= {lihatGunungHandle}>
+    <Pressable onPress={lihatGunungHandle}>
       <View style={styles.gunungItem}>
         <View style={styles.gunungInfo}>
           <Image source={{ uri: item.foto }} style={styles.gunungFoto} />
@@ -48,14 +49,16 @@ const ListGunung = () => {
             <Text>Ketinggian: {item.ketinggian} mdpl</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.ikutiButton}
-          title="Ikuti"
-          onPress={ikutiHandle}>
+        <TouchableOpacity style={styles.ikutiButton} title="Ikuti" onPress={ikutiHandle}>
           <Text style={styles.ikutiButtonText}>Ikuti</Text>
         </TouchableOpacity>
       </View>
+      <TouchableOpacity style={styles.lihatButton} onPress={lihatGunungHandle}>
+        <Text style={styles.lihatButtonText}>Lihat Gunung</Text>
+      </TouchableOpacity>
     </Pressable>
   );
+  
 
   const lihatGunungHandle = () => {
     console.log("lihat gunung pressed"); //Sementara untuk testing
@@ -66,15 +69,13 @@ const ListGunung = () => {
   };
 
   return (
-    <View style={styles.containerBG}>
-      <View style={styles.container}>
-        <Text style={styles.title}>Jelajahi Gunung</Text>
-        <FlatList
-          data={gunungList}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.nama}
-        />
-      </View>
+    <View style={styles.container}>
+      <Text style={styles.title}>Daftar Gunung</Text>
+      <FlatList
+        data={gunungList}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.nama}
+      />
       <BottomNavigation/>
     </View>
   );
@@ -137,4 +138,3 @@ const styles = StyleSheet.create({
 });
 
 export default ListGunung;
-

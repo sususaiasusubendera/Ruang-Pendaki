@@ -9,13 +9,15 @@ import AddHike from './App/screens/AddHike';
 import EditProfile from './App/screens/EditProfile';
 import ListGunung from './App/screens/ListGunung';
 import ListUsers from './App/screens/ListUsers';
+import ProfilGunung from './App/screens/ProfilGunung';
+import InfoJalur from './App/screens/InfoJalur';
 
 const Stack = createStackNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="LoginScreen">
+      <Stack.Navigator initialRouteName="ProfilGunung">
         <Stack.Screen
           name="RegisterAkun"
           component={RegisterAkun}
@@ -55,6 +57,16 @@ const App = () => {
           name="ListUsers"
           component={ListUsers}
           options={{ title: 'Tambah Teman' }}
+        />
+        <Stack.Screen
+          name="ProfilGunung"
+          component={ProfilGunung}
+          options={{ title: 'Profil Gunung' }}
+        />
+        <Stack.Screen
+          name="InfoJalur"
+          component={InfoJalur}
+          options={{ title: 'Info Jalur' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

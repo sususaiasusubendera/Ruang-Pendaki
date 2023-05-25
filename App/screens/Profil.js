@@ -17,47 +17,10 @@ const firebaseConfig = {
 
 const ProfilePage = ({ navigation, route}) => {
 
-  // const [userData, setUserData]= useState();
-
-  // const fetchUserInfo = async () => {
-  //   const { uid } = auth().currentUser;
-  //   // Discard fetch when user ID not defined
-  //   if (!uid) return;
-  //   const userRef = db.collection("users").doc(uid);
-  //   const doc = await userRef.get();
-  //   const userDataProfil = doc.data();
-  //   setUserData(userDataProfil);
-  // };
-
-  // // Get user on mount
-  // useEffect(() => {
-  //   fetchUserInfo();
-  // }, []);
-
-  // if (!userData) return null;
-
-  const signOut = async () => {
-    auth.signOut();
-    navigation.reset({ index: 0, routes : [{ name: "Signup"}]})
-  }
-
-  // useEffect(() => {
-  //   console.log("test");
-  //   getUserData();
-  // }, [])
-
-  // const getUserData = async () => {
-  //   const q = query(
-  //     collection(db, "users"),
-  //     where("uid", "==", auth.currentUser.uid)
-  //   );
-
-  //   const querySnapShot = await getDocs(q);
-  //   querySnapShot.forEach((doc) => {
-  //     console.log(doc.id, " => ", doc.data());
-  //     setUserData(doc.data())
-  //   });
-  // };
+  // const signOut = async () => {
+  //   auth.signOut();
+  //   navigation.reset({ index: 0, routes : [{ name: "Signup"}]})
+  // }
   const { userData } = route.params;
   const database = getFirestore(); // Remove the argument from getFirestore()
   const { userGunung } = collection(database, 'gunung');
@@ -115,7 +78,8 @@ const ProfilePage = ({ navigation, route}) => {
   //   const updatedRiwayatPendakian = [...riwayatPendakian, riwayatPendakian];
   //   setRiwayatPendakian(updatedRiwayatPendakian);
   // };
-
+  console.log(userData.uidRiwayatGunung)
+  
   return (
     <View style={styles.container2}>
       <ScrollView>
