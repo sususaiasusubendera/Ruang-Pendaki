@@ -116,7 +116,7 @@ const ProfilePage = ({ navigation, route }) => {
           style={styles.editProfileButton}
           onPress={() => navigation.navigate('EditProfile', { userData: userData })}
         >
-          <Text style={styles.editProfileText}>Edit Profile & Account</Text>
+          <Text style={styles.editProfileText}>Edit Profil</Text>
         </TouchableOpacity>
 
           </>
@@ -155,9 +155,7 @@ const ProfilePage = ({ navigation, route }) => {
         </TouchableOpacity>
       </View>
     </ScrollView>
-    <View style={styles.containerPendakian}>
     <BottomNavigation/>
-    </View>
     </View>
   );
 };
@@ -254,6 +252,7 @@ const styles = StyleSheet.create({
   editProfileText: {
     color: 'white',
     fontWeight: 'bold',
+    textAlign: 'center'
   },
   sectionTitle: {
     fontSize: 20,
@@ -298,6 +297,7 @@ const styles = StyleSheet.create({
   addHikeText: {
     color: 'white',
     fontWeight: 'bold',
+    textAlign: 'center'
   },
 });
 

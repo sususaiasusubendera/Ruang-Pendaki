@@ -103,14 +103,14 @@ const handleSaveProfile = async () => {
         style={styles.uploadCoverPhotoButton}
         onPress={() => handleUploadCoverPhoto('coverPhoto')}
         >
-        <Text style={styles.buttonText}>Upload Cover Photo</Text>
+        <Text style={styles.buttonText}>Upload Foto Sampul</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.uploadProfilePhotoButton}
         onPress={() => handleUploadProfilePhoto('profilePhoto')}
         >
-        <Text style={styles.buttonText}>Upload{"\n"}Profile Photo</Text>
+        <Text style={styles.buttonText}>Upload{"\n"}Foto Profil</Text>
       </TouchableOpacity>
 
       <View style={styles.container16}>
@@ -160,15 +160,15 @@ const handleSaveProfile = async () => {
         </View>
 
         <TouchableOpacity style={styles.updateButton} onPress={handleSaveProfile}>
-          <Text style={styles.buttonText1}>Save Profile</Text>
+          <Text style={styles.buttonText1}>Simpan Profil</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.profilButton} onPress={handleLanjutProfil}>
-          <Text style={styles.buttonText1}>Lihat Profil barumu!</Text>
+          <Text style={styles.buttonText3}>Lihat Profil barumu!</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button} onPress={handleCancel}>
-          <Text style={styles.buttonText2}>Cancel</Text>
+          <Text style={styles.buttonText2}>Batalkan</Text>
         </TouchableOpacity>
       </View>
 
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   profilButton: {
-    backgroundColor: 'blue',
+    backgroundColor: '#D9D9D9',
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 4,
@@ -240,12 +240,19 @@ const styles = StyleSheet.create({
   buttonText1: {
     color: 'white',
     fontSize: 14,
-    textAlign: 'center'
+    textAlign: 'center',
+    fontWeight: 'bold'
   },
   buttonText2: {
     color: 'black',
     fontSize: 14,
     textAlign: 'center'
+  },
+  buttonText3: {
+    color: 'black',
+    fontSize: 14,
+    textAlign: 'center',
+    fontWeight: 'bold'
   },
   uploadCoverPhotoButton: {
     borderWidth: 1,
