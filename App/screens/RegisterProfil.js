@@ -51,6 +51,8 @@ const RegisterProfil = ({ navigation, route }) => {
         birthDate,
         address,
         uid: user.uid,
+        coverPhoto: "https://firebasestorage.googleapis.com/v0/b/ruang-pendaki-84fdc.appspot.com/o/users%2FcoverPhotos%2Fdefault_cover.jpg?alt=media&token=764034b7-03a1-4f99-8875-ce95380bbc58",
+        profilePhoto: "https://firebasestorage.googleapis.com/v0/b/ruang-pendaki-84fdc.appspot.com/o/users%2FprofilePhotos%2Fdefault_profile.jpg?alt=media&token=120cd923-110a-4ade-a958-5531ce45b5bc",
       });
 
       // Menampilkan pop-up "Register Berhasil"
