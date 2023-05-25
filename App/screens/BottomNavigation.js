@@ -1,30 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 const BottomNavigation = () => {
   const navigation = useNavigation();
+  const activeScreen = useRoute().name;
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        style={styles.tab}
-        onPress={() => navigation.navigate('Profil')} //        navigation.navigate('Profil', { userData });
-
+        style={[styles.tab, activeScreen === 'Profil' && styles.tabSelected]}
+        onPress={() => {
+          navigation.navigate('Profil');  //navigation.navigate('Profil', { userData });
+        }}
       >
         <Image source={require('../../assets/user.png')} style={styles.navIcon} />
         <Text style={styles.tabText}>Profil</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.tab}
-        onPress={() => navigation.navigate('ListGunung')}
+        style={[styles.tab, activeScreen === 'ListGunung' && styles.tabSelected]}
+        onPress={() => {
+                  navigation.navigate('ListGunung');
+                }}
       >
         <Image source={require('../../assets/mountains.png')} style={styles.navIcon} />
         <Text style={styles.tabText}>Gunung</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.tab}
-        onPress={() => navigation.navigate('ListUsers')}
+        style={[styles.tab, activeScreen === 'ListUsers' && styles.tabSelected]}
+        onPress={() => {
+          navigation.navigate('ListUsers');
+        }}
       >
         <Image source={require('../../assets/users.png')} style={styles.navIcon} />
         <Text style={styles.tabText}>Cari Teman</Text>
@@ -53,6 +59,11 @@ const styles = {
   navIcon: {
     width: 35,
     height: 35,
+  },
+  tabSelected: {
+    backgroundColor: '#44663F',
+    borderTopWidth: 3,
+    borderTopColor: '#44663F',
   },
 };
 
