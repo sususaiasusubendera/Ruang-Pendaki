@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Image, TouchableOpacity, Text, Modal } from 'react-native';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
@@ -16,6 +16,8 @@ const firebaseConfig = {
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoginPopupVisible, setIsLoginPopupVisible] = useState(false);
+  const [errmsg, setErrmsg] = useState('');
 
   const handleLogin = async () => {
     try {
@@ -37,7 +39,13 @@ const LoginScreen = ({ navigation }) => {
       }
     } catch (error) {
       console.log('Login gagal', error);
+      setIsLoginPopupVisible(true);
+      setErrmsg('Email/Password salah\nSilakan coba lagi')
     }
+  };
+  const handleLoginPopupError = () => {
+    setIsLoginPopupVisible(false);
+    setErrmsg('');
   };
 
   return (
@@ -66,6 +74,18 @@ const LoginScreen = ({ navigation }) => {
       <TouchableOpacity onPress={() => navigation.navigate('RegisterAkun')}>
         <Text style={styles.registerText}>Belum punya akun? Daftar sekarang</Text>
       </TouchableOpacity>
+      <Modal visible={errmsg !== ''} animationType="fade" transparent={true}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.errorText}>{errmsg}</Text>
+            <Button
+              title="OK"
+              onPress={handleLoginPopupError}
+              color="#295531"
+            />
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -100,6 +120,29 @@ const styles = StyleSheet.create({
   registerText: {
     color: 'blue',
     textDecorationLine: 'underline',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 16,
+    alignItems: 'center',
+  },
+  modalText: {
+    fontSize: 18,
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  errorText: {
+    fontSize: 16,
+    marginBottom: 8,
+    color: 'red',
+    textAlign: 'center',
   },
 });
 

@@ -37,7 +37,7 @@ const AddHike = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tambahkan Riwayat Pendakian</Text>
+      <Text style={styles.title}>Tambahkan Pengalamanmu!</Text>
 
       <View style={styles.inputContainer}>
         <TextInput
@@ -80,12 +80,18 @@ const AddHike = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
+  containerBG: {
+    flex: 1,
+    padding: 0,
+  },
   container: {
     flex: 1,
     padding: 16,
+    backgroundColor: "#FFFAED",
+    justifyContent: 'center'
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 16,
   },
@@ -101,7 +107,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
   addButton: {
-    backgroundColor: 'blue',
+    backgroundColor: 'green',
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 4,
