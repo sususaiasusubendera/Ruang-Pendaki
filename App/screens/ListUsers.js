@@ -72,7 +72,7 @@ const ListUsers = () => {
   return (
     <View style={styles.containerBG}>
       <View style={styles.container}>
-        <Text style={styles.title}>List of Users</Text>
+        <Text style={styles.title}>Mungkin Kamu Juga Kenal</Text>
         <FlatList
           data={userList}
           renderItem={renderItem}
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     paddingRight: 16,
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 16,
   },

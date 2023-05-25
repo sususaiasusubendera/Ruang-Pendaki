@@ -27,7 +27,7 @@ const BottomNavigation = () => {
         onPress={() => navigation.navigate('ListUsers')}
       >
         <Image source={require('../../assets/users.png')} style={styles.navIcon} />
-        <Text style={styles.tabText}>Teman</Text>
+        <Text style={styles.tabText}>Cari Teman</Text>
       </TouchableOpacity>
     </View>
   );

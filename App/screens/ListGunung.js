@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, FlatList, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import BottomNavigation from './BottomNavigation';
 
@@ -38,52 +38,71 @@ const ListGunung = () => {
 
   // Render item component for FlatList
   const renderItem = ({ item }) => (
-    <View style={styles.gunungItem}>
-      <View style={styles.gunungInfo}>
-        <Image source={{ uri: item.foto }} style={styles.gunungFoto} />
-        <View style={styles.gunungText}>
-          <Text style={styles.gunungNama}>{item.nama}</Text>
-          <Text>Lokasi: {item.lokasi}</Text>
-          <Text>Ketinggian: {item.ketinggian}</Text>
+    <Pressable onPress= {lihatGunungHandle}>
+      <View style={styles.gunungItem}>
+        <View style={styles.gunungInfo}>
+          <Image source={{ uri: item.foto }} style={styles.gunungFoto} />
+          <View style={styles.gunungText}>
+            <Text numberOfLines={1} ellipsizeMode="tail" style={styles.gunungNama}>{item.nama}</Text>
+            <Text numberOfLines={1} ellipsizeMode="tail">Lokasi: {item.lokasi}</Text>
+            <Text>Ketinggian: {item.ketinggian} mdpl</Text>
+          </View>
         </View>
+        <TouchableOpacity style={styles.ikutiButton}
+          title="Ikuti"
+          onPress={ikutiHandle}>
+          <Text style={styles.ikutiButtonText}>Ikuti</Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.lihatButton}>
-        <Text style={styles.lihatButtonText}>Lihat Gunung</Text>
-      </TouchableOpacity>
-    </View>
+    </Pressable>
   );
 
+  const lihatGunungHandle = () => {
+    console.log("lihat gunung pressed"); //Sementara untuk testing
+  };
+
+  const ikutiHandle = () => {
+    console.log("ikuti pressed"); //Sementara untuk testing
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Daftar Gunung</Text>
-      <FlatList
-        data={gunungList}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.nama}
-      />
+    <View style={styles.containerBG}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Jelajahi Gunung</Text>
+        <FlatList
+          data={gunungList}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.nama}
+        />
+      </View>
       <BottomNavigation/>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  containerBG: {
+    flex: 1,
+    padding: 0,
+  },
   container: {
     flex: 1,
     padding: 16,
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 16,
   },
   gunungItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 15,
   },
   gunungInfo: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginRight: 15,
     flex: 1,
   },
   gunungFoto: {
@@ -91,6 +110,8 @@ const styles = StyleSheet.create({
     height: 80,
     borderRadius: 40,
     marginRight: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
   },
   gunungText: {
     flex: 1,
@@ -100,13 +121,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 4,
   },
-  lihatButton: {
-    backgroundColor: 'blue',
+  ikutiButton: {
+    backgroundColor: 'green',
     paddingVertical: 6,
     paddingHorizontal: 12,
     borderRadius: 4,
+    width: "16%",
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  lihatButtonText: {
+  ikutiButtonText: {
     color: 'white',
     fontWeight: 'bold',
   },
