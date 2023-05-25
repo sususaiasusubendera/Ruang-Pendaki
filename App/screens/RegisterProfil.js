@@ -27,7 +27,8 @@ const RegisterProfil = ({ navigation, route }) => {
     const {
       email,
       phone,
-      password
+      password,
+      uid
     } = route.params;
 
     try {

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, MyBtn } from 'react-native';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, getDoc } from '@firebase/firestore';
+import { auth, db } from 'firebase/auth';
+import { getFirestore, doc, getDoc, collection, query, where } from '@firebase/firestore';
 import EditProfile from './EditProfile';
 import BottomNavigation from './BottomNavigation';
 
@@ -14,8 +15,52 @@ const firebaseConfig = {
   appId: "1:877240749467:web:40fa5d4d574930f80b653e"
 };
 
-const ProfilePage = ({ navigation, route }) => {
+const ProfilePage = ({ navigation, route}) => {
+
+  // const [userData, setUserData]= useState();
+
+  // const fetchUserInfo = async () => {
+  //   const { uid } = auth().currentUser;
+  //   // Discard fetch when user ID not defined
+  //   if (!uid) return;
+  //   const userRef = db.collection("users").doc(uid);
+  //   const doc = await userRef.get();
+  //   const userDataProfil = doc.data();
+  //   setUserData(userDataProfil);
+  // };
+
+  // // Get user on mount
+  // useEffect(() => {
+  //   fetchUserInfo();
+  // }, []);
+
+  // if (!userData) return null;
+
+  const signOut = async () => {
+    auth.signOut();
+    navigation.reset({ index: 0, routes : [{ name: "Signup"}]})
+  }
+
+  // useEffect(() => {
+  //   console.log("test");
+  //   getUserData();
+  // }, [])
+
+  // const getUserData = async () => {
+  //   const q = query(
+  //     collection(db, "users"),
+  //     where("uid", "==", auth.currentUser.uid)
+  //   );
+
+  //   const querySnapShot = await getDocs(q);
+  //   querySnapShot.forEach((doc) => {
+  //     console.log(doc.id, " => ", doc.data());
+  //     setUserData(doc.data())
+  //   });
+  // };
   const { userData } = route.params;
+  const database = getFirestore(); // Remove the argument from getFirestore()
+  const { userGunung } = collection(database, 'gunung');
   const [riwayatPendakian, setRiwayatPendakian] = useState([]);
   // const [gunungList, setGunungList] = useState([]);
   const [editMode, setEditMode] = useState(false);
@@ -25,7 +70,7 @@ const ProfilePage = ({ navigation, route }) => {
     const fetchGunungData = async () => {
       try {
         const db = getFirestore(); // Remove the argument from getFirestore()
-        const gunungRef = doc(db, 'gunung', 'V0Wz5cKT8T8ERtEFmcii');
+        const gunungRef = doc(db, 'gunung', userData.uidRiwayatGunung);
         const gunungSnapshot = await getDoc(gunungRef);
 
         if (!gunungSnapshot.empty) {
@@ -65,11 +110,11 @@ const ProfilePage = ({ navigation, route }) => {
     }
   };
 
-  const handleTambahkan = (riwayatPendakian) => {
-    // Lakukan operasi tambahkan riwayat pendakian ke profil
-    const updatedRiwayatPendakian = [...riwayatPendakian, riwayatPendakian];
-    setRiwayatPendakian(updatedRiwayatPendakian);
-  };
+  // const handleTambahkan = (riwayatPendakian) => {
+  //   // Lakukan operasi tambahkan riwayat pendakian ke profil
+  //   const updatedRiwayatPendakian = [...riwayatPendakian, riwayatPendakian];
+  //   setRiwayatPendakian(updatedRiwayatPendakian);
+  // };
 
   return (
     <View style={styles.container2}>
@@ -149,16 +194,24 @@ const ProfilePage = ({ navigation, route }) => {
 
         <TouchableOpacity
           style={styles.addHikeButton}
-          onPress={() => navigation.navigate('AddHike' , ( handleTambahkan ))}
+          onPress={() => navigation.navigate('AddHike', { userData: userData })}
         >
           <Text style={styles.addHikeText}>Tambah Riwayat Pendakian</Text>
         </TouchableOpacity>
+
+        {/* <MyBtn
+          text = {"Log out"}
+          onPress = {() => {
+            signOut();
+          }}
+        /> */}
+
       </View>
     </ScrollView>
     <BottomNavigation/>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

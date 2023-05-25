@@ -9,7 +9,7 @@ const BottomNavigation = () => {
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.tab}
-        onPress={() => navigation.navigate('Profil', {userData})} //        navigation.navigate('Profil', { userData });
+        onPress={() => navigation.navigate('Profil')} //        navigation.navigate('Profil', { userData });
 
       >
         <Text style={styles.tabText}>Profil</Text>
