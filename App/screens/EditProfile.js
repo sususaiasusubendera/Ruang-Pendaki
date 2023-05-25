@@ -57,7 +57,7 @@ const EditProfile = ({ navigation, route }) => {
 const handleSaveProfile = async () => {
     try {
       const db = getFirestore();
-      const userRef = doc(db, 'users', 'CDSMsaLG9caJpHyaTYArDV0Xznw2');
+      const userRef = doc(db, 'users', userData.uid);
 
       // Update the user data in Firestore
       await updateDoc(userRef, {

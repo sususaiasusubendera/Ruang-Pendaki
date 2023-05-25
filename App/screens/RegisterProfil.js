@@ -15,7 +15,7 @@ const firebaseConfig = {
 
 const RegisterProfil = ({ navigation, route }) => {
   const [fullName, setFullName] = useState('');
-  const [selectedGender, setSelectedGender] = useState('');
+  const [gender, setSelectedGender] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [address, setAddress] = useState('');
   const [isRegisterSuccess, setIsRegisterSuccess] = useState(false); // State untuk mengontrol visibilitas pop-up
@@ -46,9 +46,10 @@ const RegisterProfil = ({ navigation, route }) => {
         email,
         phone,
         fullName,
-        selectedGender,
+        gender,
         birthDate,
         address,
+        uid: user.uid,
       });
 
       // Menampilkan pop-up "Register Berhasil"
@@ -91,14 +92,14 @@ const RegisterProfil = ({ navigation, route }) => {
       />
       <View style={styles.genderContainer}>
         <TouchableOpacity
-          style={[styles.genderOption, selectedGender === 'Pria' && styles.selectedOption]}
+          style={[styles.genderOption, gender === 'Pria' && styles.selectedOption]}
           onPress={() => setSelectedGender('Pria')}
         >
           <Text style={styles.optionText}>Pria</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.genderOption, selectedGender === 'Wanita' && styles.selectedOption]}
+          style={[styles.genderOption, gender === 'Wanita' && styles.selectedOption]}
           onPress={() => setSelectedGender('Wanita')}
         >
           <Text style={styles.optionText}>Wanita</Text>

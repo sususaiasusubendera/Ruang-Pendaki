@@ -57,7 +57,7 @@ const ProfilePage = ({ navigation, route }) => {
   const handleSaveProfile = async (updatedUserData) => {
     try {
       const db = getFirestore();
-      const userRef = doc(db, 'users', userData.id);
+      const userRef = doc(db, 'users', userData.uid);
       await updateDoc(userRef, updatedUserData);
       console.log('Profile saved successfully!');
     } catch (error) {
