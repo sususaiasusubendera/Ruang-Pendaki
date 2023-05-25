@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
-const GunungSumbing = () => {
+const GunungSemeru = () => {
   const [gunungData, setGunungData] = useState(null);
 
   useEffect(() => {
     const fetchGunungData = async () => {
       try {
         const db = getFirestore();
-        const gunungRef = doc(db, 'gunung', 'Gunung Sumbing');
+        const gunungRef = doc(db, 'gunung', 'Gunung Semeru');
         const gunungSnapshot = await getDoc(gunungRef);
 
         if (gunungSnapshot.exists()) {
@@ -141,4 +141,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default GunungSumbing;
+export default GunungSemeru;

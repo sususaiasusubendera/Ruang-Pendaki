@@ -11,13 +11,17 @@ import ListGunung from './App/screens/ListGunung';
 import ListUsers from './App/screens/ListUsers';
 import ProfilGunung from './App/screens/ProfilGunung';
 import InfoJalur from './App/screens/InfoJalur';
+import GunungCiremai from './App/screens/GunungCiremai';
+import GunungPrau from './App/screens/GunungPrau';
+import GunungSemeru from './App/screens/GunungSemeru';
+import GunungSumbing from './App/screens/GunungSumbing';
 
 const Stack = createStackNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="ProfilGunung">
+      <Stack.Navigator initialRouteName="LoginScreen">
         <Stack.Screen
           name="RegisterAkun"
           component={RegisterAkun}
@@ -67,6 +71,26 @@ const App = () => {
           name="InfoJalur"
           component={InfoJalur}
           options={{ title: 'Info Jalur' }}
+        />
+        <Stack.Screen
+          name="GunungCiremai"
+          component={GunungCiremai}
+          options={{ title: 'Gunung Ciremai' }}
+        />
+        <Stack.Screen
+          name="GunungPrau"
+          component={GunungPrau}
+          options={{ title: 'Gunung Prau' }}
+        />
+        <Stack.Screen
+          name="GunungSemeru"
+          component={GunungSemeru}
+          options={{ title: 'Gunung Semeru' }}
+        />
+        <Stack.Screen
+          name="GunungSumbing"
+          component={GunungSumbing}
+          options={{ title: 'Gunung Sumbing' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
