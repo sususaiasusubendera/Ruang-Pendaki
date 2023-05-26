@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "RuangPendaki",
+    "name": "Ruang Pendaki",
     "slug": "RuangPendaki",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/appicon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -21,10 +21,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.c1mory.RuangPendaki"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b810be63-0f26-43d4-9a96-8a8db4d64700"
+      }
     }
   }
 }
