@@ -78,7 +78,6 @@ const ProfilePage = ({ navigation, route}) => {
   //   const updatedRiwayatPendakian = [...riwayatPendakian, riwayatPendakian];
   //   setRiwayatPendakian(updatedRiwayatPendakian);
   // };
-  console.log(userData.uidRiwayatGunung)
   
   return (
     <View style={styles.container2}>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 
-const GunungSumbing = () => {
+const GunungSumbing = ({navigation}) => {
   const [gunungData, setGunungData] = useState(null);
 
   useEffect(() => {
@@ -51,7 +51,9 @@ const GunungSumbing = () => {
       </View>
       <View style={styles.jalurContainer}>
         <Text style={styles.jalurTitle}>Jalur Pendakian</Text>
+      <TouchableOpacity onPress= {() => navigation.navigate('InfoJalur') } >
         <Text style={styles.jalurNama}>{gunungData.jalur_pendakian}</Text>
+      </TouchableOpacity>
         {/* {gunungData.jalur_pendakian.map((jalur, index) => (
           <View key={index} style={styles.jalurItem}>
             <Text style={styles.jalurNama}>{jalur.nama}</Text>

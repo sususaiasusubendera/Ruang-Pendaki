@@ -11,7 +11,7 @@ const BottomNavigation = () => {
       <TouchableOpacity
         style={[styles.tab, activeScreen === 'Profil' && styles.tabSelected]}
         onPress={() => {
-          navigation.navigate('Profil');  //navigation.navigate('Profil', { userData });
+          navigation.goBack();  //navigation.navigate('Profil', { userData });
         }}
       >
         <Image source={require('../../assets/user.png')} style={styles.navIcon} />
